@@ -1,13 +1,13 @@
-import requests
+import requests#请求
 import unittest
-from common import readConfig
+import readConfig
+
 cf = readConfig.ReadConfig()
 class testCode(unittest.TestCase):
 
     def setParameters(self):
-        self.http =cf .get_http("scheme")
         self.baseurl = cf.get_http("baseurl")
-        self.url = str(self.http)+str(self.baseurl) \
+        self.url = str(self.baseurl) \
                     +"/api/v1/cfuser/sendCode/13052395885"
         return self.url
     def setUp(self):
@@ -22,11 +22,11 @@ class testCode(unittest.TestCase):
         self.value = str(self.data["value"])
         self.code=self.value.split("! ")[-1]
         self.assertEqual(self.re.status_code,200)
+        self.assertEqual(self.re.ok,True)
+        self.assertEqual(self.data["success"],True)
     def tearDown(self):
 
         print(self.code)
         print(self.value)
         print("**************测试结束*************")
 
-if __name__ == "__main__":
-    unittest.main()
