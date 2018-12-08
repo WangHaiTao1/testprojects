@@ -1,20 +1,30 @@
 import requests#请求
 import unittest
 import readConfig
-
+import paramunittest
+from common import comm
+login_xls = comm.get_xls("userCase.xlsx","login")
+print(login_xls)
 cf = readConfig.ReadConfig()
+
+@paramunittest.parametrized(*login_xls)
 class testCode(unittest.TestCase):
 
-    def setParameters(self):
-        self.baseurl = cf.get_http("baseurl")
-        self.url = str(self.baseurl) \
-                    +"/api/v1/cfuser/sendCode/13052395885"
-        return self.url
+    def setParameters(self,case_name,email):
+        """
+        set params
+        :param case_name
+        :param email
+        :return:
+        """
+        self.case_name = case_name
+        self.email = email
     def setUp(self):
         print("***********testSendCode-测试开始**********")
 
     def test_SendCode_success(self):
-        self.re = requests.post(self.setParameters())
+        url=cf.get_http("baseurl")+"/api/v1/cfuser/sendCode/"+self.email
+        self.re = requests.post(url)
         self.data = self.re.json()
         self.assert_code()
     def assert_code(self):
