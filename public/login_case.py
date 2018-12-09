@@ -12,7 +12,7 @@ get_xlsx = commo.get_xlsx(path+"userCase.xlsx","sendcode")
 @paramunittest.parametrized(*get_xlsx)
 class loginCase(unittest.TestCase):
 
-    def  setParameters(self,case_name,mobile):
+    def setParameters(self,case_name,mobile):
         """
         :param case_name:
         :param mobile:
@@ -37,6 +37,11 @@ class loginCase(unittest.TestCase):
         """send requests 发送请求"""
 
         self.re = requests.post(url=url)
+
+    def tearDown(self):
+        print(self.mobile)
+        print(self.re.json())
+        print("测试结束")
         josn = self.re.json()
         data = josn["value"]
         success = josn["errorDescription"]
@@ -52,10 +57,5 @@ class loginCase(unittest.TestCase):
             self.assertEqual(1,1)
         else:
             self.assertEqual(1,2)
-    def tearDown(self):
-        print(self.mobile)
-        print(self.re.json())
-        print("测试结束")
-
 if __name__ =='__main__':
     unittest.main()

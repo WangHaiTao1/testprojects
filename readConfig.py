@@ -3,7 +3,6 @@ import configparser
 
 proDir = os.path.split(os.path.realpath(__file__))[0]#当前路径
 configPath = os.path.join(proDir, "config.ini")
-# print(configPath)
 class ReadConfig:
     def __init__(self):
         self.cf = configparser.ConfigParser()
@@ -17,4 +16,3 @@ class ReadConfig:
     def get_host(self,name):
         value = self.cf.get("HOST",name)
         return value
-
